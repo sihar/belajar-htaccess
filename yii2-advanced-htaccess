@@ -1,0 +1,28 @@
+# contoh htaccess dengan kasus di dalam document root banyak aplikasi
+# salah satu nama folder aplikasi : testing
+# http://localhost/testing/
+# https://stackoverflow.com/questions/28118691/yii2-htaccess-how-to-hide-frontend-web-and-backend-web-completely
+
+Options +FollowSymlinks
+RewriteEngine On
+
+# deal with admin first
+RewriteCond %{REQUEST_URI} ^/testing/(admin) 
+RewriteRule ^admin/assets/(.*)$ backend/web/assets/$1 [L]
+RewriteRule ^admin/css/(.*)$ backend/web/css/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/testing/backend/web/(assets|css|images)/
+RewriteCond %{REQUEST_URI} ^/testing/(admin)
+RewriteRule ^.*$ backend/web/index.php [L]
+
+RewriteCond %{REQUEST_URI} ^/testing/(assets|css|images)
+RewriteRule ^assets/(.*)$ frontend/web/assets/$1 [L]
+RewriteRule ^css/(.*)$ frontend/web/css/$1 [L]
+RewriteRule ^js/(.*)$ frontend/web/js/$1 [L] 
+RewriteRule ^images/(.*)$ frontend/web/images/$1 [L]
+
+RewriteCond %{REQUEST_URI} !^/testing/(frontend|backend)/web/(assets|css|images)/
+RewriteCond %{REQUEST_URI} !index.php
+RewriteCond %{REQUEST_FILENAME} !-f [OR]
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^.*$ frontend/web/index.php
