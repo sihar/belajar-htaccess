@@ -1,6 +1,6 @@
 # contoh htaccess dengan kasus di dalam document root banyak aplikasi
-# salah satu nama folder aplikasi : testing
-# http://localhost/testing/
+# salah satu nama folder aplikasi "testing" diakses di http://localhost/testing/
+# referensi
 # https://stackoverflow.com/questions/28118691/yii2-htaccess-how-to-hide-frontend-web-and-backend-web-completely
 
 Options +FollowSymlinks
